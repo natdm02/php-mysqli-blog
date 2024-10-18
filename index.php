@@ -18,22 +18,24 @@ $sqlQuery = "SELECT * FROM posts ORDER BY created_at DESC";
 
 $result = $dbConnection->query($sqlQuery);
 
+$posts = [];
 
-// if ($result->num_rows > 0) {
+if ($result->num_rows > 0) {
     
-    
-//     while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
 
+        $posts[] = $row;
 //         echo  $row['title'];
 //         echo  $row['content'];
 //         echo  $row['created_at'];
-//     }
-// } else {
+        }
+} 
+ //else {
 //     echo "nessun post trovato.";
 // }
 
 
-// $dbConnection->close();
+$dbConnection->close();
 ?>
 
 
@@ -55,7 +57,7 @@ $result = $dbConnection->query($sqlQuery);
 
         <h1 class="text-center"> nuovo post </h1>
 
-        <form action="add_post.php" method="post">
+        <form action="assets/posts.php" method="post">
 
             <div class="form-group">
                 <div>
@@ -75,6 +77,37 @@ $result = $dbConnection->query($sqlQuery);
             <button type="submit" class="btn btn-primary">aggiungi post</button>
 
         </form>
+
+        <h2 class="mt-5">lista dei post</h2>
+
+        <?php 
+
+        if (count($posts) > 0) {
+
+        foreach ($posts as $row) {
+
+        ?>
+            <div class="card mt-3">
+
+                <div class="card-body">
+
+                    <h5 class="card-title"><?php echo $row['title']; ?></h5>
+
+                    <p class="card-text"><?php echo $row['content']; ?></p>
+
+                    <p class="card-text"><small class="text-muted">pubblicato il: <?php echo $row['created_at']; ?></small></p>
+
+                </div>
+            </div>
+            <?php
+        }
+    } else {
+        ?>
+        <div class="alert alert-warning mt-3">nessun post trovato</div>
+        <?php
+    }
+    ?>
+
 
     </div>
 </body>

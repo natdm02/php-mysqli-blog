@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if ($dbConnection->query($sqlInsert) === TRUE) {
 
-        header("Location: index.php");
+        header("Location: ../index.php");
 
         exit;
     } else {
