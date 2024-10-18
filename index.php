@@ -1,3 +1,40 @@
+<?php
+
+
+
+define("DATABASE_ADDRESS", "localhost");
+define("DATABASE_USERNAME", "root"); 
+define("DATABASE_PASSWORD", "root");     
+define("DATABASE_NAME", "db-posts");
+
+$dbConnection = new mysqli(DATABASE_ADDRESS, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME);
+
+if ($dbConnection->connect_error) {
+    die("Connessione fallita: " . $dbConnection->connect_error);
+}
+
+
+$sqlQuery = "SELECT * FROM posts ORDER BY created_at DESC";
+
+$result = $dbConnection->query($sqlQuery);
+
+
+if ($result->num_rows > 0) {
+    
+    
+    while ($row = $result->fetch_assoc()) {
+
+        echo  $row['title'];
+        echo  $row['content'];
+        echo  $row['created_at'];
+    }
+} else {
+    echo "nessun post trovato.";
+}
+
+
+$dbConnection->close();
+?>
 
 
 
